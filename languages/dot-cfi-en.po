@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Favicon 1.0\n"
+"POT-Creation-Date: 2013-05-26 21:54+0530\n"
+"PO-Revision-Date: 2013-05-26 21:54+0530\n"
+"Last-Translator: DOT <hello@dreamsmedia.in>\n"
+"Language-Team: DOT <hello@dreamsmedia.in>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_;_e;__\n"
+"X-Poedit-Basepath: D:\\wamp\\www\\dreamsonline\\wp-content\\plugins\\custom-"
+"favicon\n"
+"X-Poedit-SearchPath-0: D:\\wamp\\www\\dreamsonline\\wp-content\\plugins"
+"\\custom-favicon\n"
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:95
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:96
+msgid "Custom Favicon"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:130
+msgid "Custom Favicon & Apple touch icon"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:132
+msgid "Favicon for Website"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:134
+msgid "Favicon for Admin"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:136
+msgid "Apple Touch Icon for Website"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:138
+msgid "Apple Touch Icon for Admin"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:140
+msgid "Basic Apple Touch Icon"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:158
+msgid "Custom Favicon Settings"
+msgstr ""
+
+#: D:\wamp\www\dreamsonline\wp-content\plugins\custom-favicon/custom-favicon.php:165
+msgid "Save Changes"
+msgstr ""
