@@ -3,7 +3,7 @@
  * Plugin Name: Custom Favicon
  * Plugin URI: http://www.dreamsonline.net/wordpress-plugins/custom-favicon/
  * Description: Helps customize WordPress for your clients by hiding non essential wp-admin components and by adding support for custom login logo and favicon for website and admin pages.
- * Version: 1.0
+ * Version: 1.0.1
  * Author: Dreams Online Themes
  * Author URI: http://www.dreamsonline.net/wordpress-themes/
  * Author Email: hello@dreamsmedia.in
@@ -112,7 +112,8 @@ if ( ! class_exists( 'DOT_CFI' ) ) {
    				wp_enqueue_script( 'thickbox' );
     			wp_enqueue_script( 'media-upload' );
 
-		        wp_register_script('dot_cfi_admin', WP_PLUGIN_URL.'/custom-favicon/js/dot_cfi_admin.js', array( 'thickbox', 'media-upload' ));
+		        wp_register_script('dot_cfi_admin', plugins_url( '/custom-favicon/js/dot_cfi_admin.js' , __FILE__ ), array( 'thickbox', 'media-upload' ));
+		        
 		        wp_enqueue_script('dot_cfi_admin');
 		    }
 		} //dot_cfi_assets

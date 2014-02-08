@@ -4,8 +4,8 @@ Donate link: http://www.dreamsonline.net
 Tags: theme, favicon, admin, blog, wordpress, icon, iphone, apple touch, apple touch icon, upload
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.0
-Last Updated: 2013-May-21
+Stable tag: 1.0.1
+Last Updated: 2014-Feb-09
 Plugin Name: Custom Favicon
 Plugin URI: http://www.dreamsonline.net/wordpress-plugins/custom-favicon/
 Author: Harish Chouhan
@@ -53,6 +53,9 @@ You can also visit the [support center](http://www.dreamsonline.net/wordpress-pl
 
 
 == Changelog ==
+
+= 1.0.1
+* Changed WP_PLUGIN_URL to plugins_url() - Thanks to @earnjam - William Earnhardt
 
 = 1.0.0
 * This is the first version
