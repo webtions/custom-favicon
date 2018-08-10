@@ -3,8 +3,8 @@
  * Plugin Name: Custom Favicon
  * Plugin URI: http://www.dreamsonline.net/wordpress-plugins/custom-favicon/
  * Description: Helps customize WordPress for your clients by hiding non essential wp-admin components and by adding support for custom login logo and favicon for website and admin pages.
- * Version: 1.0.2
- * Author: Dreams Online Themes
+ * Version: 1.0.3
+ * Author: Harish Chouhan
  * Author URI: http://www.dreamsonline.net/wordpress-themes/
  * Author Email: hello@dreamsmedia.in
  *
@@ -15,7 +15,7 @@
  *
  * License:
 
-  Copyright 2013 "Custom Favicon WordPress Plugin" (hello@dreamsmedia.in)
+  Copyright 2015 "Custom Favicon WordPress Plugin" (hello@dreamsmedia.in)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as

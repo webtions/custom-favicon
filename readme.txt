@@ -1,11 +1,11 @@
 === Custom Favicon ===
-Contributors: hchouhan, dreamsonline, dreamsmedia
+Contributors: hchouhan, themeist
 Donate link: http://www.dreamsonline.net
 Tags: theme, favicon, admin, blog, wordpress, icon, iphone, apple touch, apple touch icon, upload
 Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 1.0.2
-Last Updated: 2014-Feb-10
+Tested up to: 4.2.1
+Stable tag: 1.0.3
+Last Updated: 2015-May-06
 Plugin Name: Custom Favicon
 Plugin URI: http://www.dreamsonline.net/wordpress-plugins/custom-favicon/
 Author: Harish Chouhan
@@ -53,6 +53,9 @@ You can also visit the [support center](http://www.dreamsonline.net/wordpress-pl
 
 
 == Changelog ==
+
+= 1.0.3
+* Updated readme
 
 = 1.0.2
 * Fixed incorrect JS path. Upload issues fixed.
