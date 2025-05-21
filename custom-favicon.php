@@ -144,8 +144,16 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( $this->option_key );
 			$value   = $options[ $key ] ?? '';
 			?>
-			<input type="text" id="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" class="regular-text text-upload" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="<?php echo esc_url( $value ); ?>" />
-			<input type="button" class="button button-upload" value="<?php esc_attr_e( 'Upload', 'custom-favicon' ); ?>" />
+			<span class="upload">
+				<input
+					type="text"
+					id="<?php echo esc_attr( "{$this->option_key}[$key]" ); ?>"
+					class="regular-text text-upload"
+					name="<?php echo esc_attr( "{$this->option_key}[$key]" ); ?>"
+					value="<?php echo esc_url( $value ); ?>"
+				/>
+				<button type="button" class="button button-upload"><?php esc_html_e( 'Upload', 'custom-favicon' ); ?></button>
+			</span>
 			<?php
 		}
 
@@ -200,6 +208,9 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			}
 			if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
 				echo '<link rel="apple-touch-icon" href="' . esc_url( $options['apple_icon_frontend_url'] ) . '" />' . "\n";
+			}
+			if ( $default ) {
+				echo '<meta name="msapplication-TileImage" content="' . esc_url( $default ) . '" />' . "\n";
 			}
 		}
 
