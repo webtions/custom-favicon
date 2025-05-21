@@ -48,20 +48,22 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
 		}
 
-		function dot_cfi_assets() {
-			if ( isset( $_GET['page'] ) && $_GET['page'] === 'dot_cfi' ) {
-				wp_enqueue_style( 'thickbox' );
-				wp_enqueue_script( 'thickbox' );
-				wp_enqueue_script( 'media-upload' );
-				wp_register_script(
-					'dot_cfi_admin',
-					plugins_url( '/js/dot_cfi_admin.js', __FILE__ ),
-					array( 'thickbox', 'media-upload' ),
-					filemtime( plugin_dir_path( __FILE__ ) . 'js/dot_cfi_admin.js' ),
-					true
-				);
-				wp_enqueue_script( 'dot_cfi_admin' );
+		function dot_cfi_assets( $hook_suffix ) {
+			if ( $hook_suffix !== 'settings_page_dot_cfi' ) {
+				return;
 			}
+
+			wp_enqueue_media();
+
+			wp_register_script(
+				'dot_cfi_admin',
+				plugins_url( '/js/dot_cfi_admin.js', __FILE__ ),
+				array( 'jquery' ),
+				filemtime( plugin_dir_path( __FILE__ ) . 'js/dot_cfi_admin.js' ),
+				true
+			);
+
+			wp_enqueue_script( 'dot_cfi_admin' );
 		}
 
 		public function dot_cfi_settings() {

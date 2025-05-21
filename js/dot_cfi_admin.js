@@ -1,46 +1,34 @@
-( function( $ ) {
-    $( function() {
-        $.fn.dot_cfi = function( options ) {
-            var selector = $( this ).selector; // Get the selector
-            // Set default options
-            var defaults = {
-                'preview' : '.preview-upload',
-                'text'    : '.text-upload',
-                'button'  : '.button-upload'
-            };
-            var options  = $.extend( defaults, options );
+(function($) {
+	$(function() {
+		$('.upload').each(function() {
+			var container = $(this);
+			var button = container.find('.button-upload');
+			var input = container.find('.text-upload');
+			var preview = container.find('.preview-upload');
 
-            // When the Button is clicked...
-            $( options.button ).click( function() {
-                // Get the Text element.
-                var text = $( this ).siblings( options.text );
+			button.on('click', function(e) {
+				e.preventDefault();
 
-                // Show WP Media Uploader popup
-                tb_show( 'Upload a logo', 'media-upload.php?referer=dot_cfi&type=image&TB_iframe=true&post_id=0', false );
+				var frame = wp.media({
+					title: 'Select or Upload Image',
+					button: {
+						text: 'Use this image'
+					},
+					multiple: false
+				});
 
-                // Re-define the global function 'send_to_editor'
-                // Define where the new value will be sent to
-                window.send_to_editor = function( html ) {
-                    // Get the URL of new image
-                    var src = $( 'img', html ).attr( 'src' );
-                    // Send this value to the Text field.
-                    text.attr( 'value', src ).trigger( 'change' );
-                    tb_remove(); // Then close the popup window
-                }
-                return false;
-            } );
+				frame.on('select', function() {
+					var attachment = frame.state().get('selection').first().toJSON();
+					input.val(attachment.url).trigger('change');
+					preview.attr('src', attachment.url).show();
+				});
 
-            $( options.text ).bind( 'change', function() {
-                // Get the value of current object
-                var url = this.value;
-                // Determine the Preview field
-                var preview = $( this ).siblings( options.preview );
-                // Bind the value to Preview field
-                $( preview ).attr( 'src', url );
-            } );
-        }
+				frame.open();
+			});
 
-        // Usage
-        $( '.upload' ).dot_cfi(); // Use as default option.
-    } );
-} ( jQuery ) );
+			input.on('change', function() {
+				preview.attr('src', input.val());
+			});
+		});
+	});
+})(jQuery);
