@@ -168,12 +168,14 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$default = $options['favicon_default_url'] ?? '';
 			$dark    = $options['favicon_dark_url'] ?? '';
 
-			if ( $default ) {
-				$this->output_favicon_tag( $default );
+			// Output dark mode first (with media query)
+			if ( $dark ) {
+				$this->output_favicon_tag( $dark, '(prefers-color-scheme: dark)' );
 			}
 
-			if ( $dark ) {
-				$this->output_favicon_tag( $dark, 'prefers-color-scheme: dark' );
+			// Output light/default (also with explicit media)
+			if ( $default ) {
+				$this->output_favicon_tag( $default, '(prefers-color-scheme: light)' );
 			}
 
 			if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
