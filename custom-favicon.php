@@ -49,18 +49,20 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 		}
 
 		function dot_cfi_assets() {
-		    if ( isset( $_GET['page'] ) && $_GET['page'] == 'dot_cfi' ) {
-    			wp_enqueue_style( 'thickbox' );
-   				wp_enqueue_script( 'thickbox' );
-    			wp_enqueue_script( 'media-upload' );
-		        wp_register_script( 'dot_cfi_admin', plugins_url( '/js/dot_cfi_admin.js', __FILE__ ), array( 'thickbox', 'media-upload' ) );
-		        wp_enqueue_script( 'dot_cfi_admin' );
-		    }
+			if ( isset( $_GET['page'] ) && $_GET['page'] === 'dot_cfi' ) {
+				wp_enqueue_style( 'thickbox' );
+				wp_enqueue_script( 'thickbox' );
+				wp_enqueue_script( 'media-upload' );
+				wp_register_script( 'dot_cfi_admin', plugins_url( '/js/dot_cfi_admin.js', __FILE__ ), array( 'thickbox', 'media-upload' ) );
+				wp_enqueue_script( 'dot_cfi_admin' );
+			}
 		}
 
 		public function dot_cfi_settings() {
 			register_setting( 'dot_cfi_settings', 'dot_cfi_settings', array( $this, 'settings_validate' ) );
+
 			add_settings_section( 'favicon', __( 'Custom Favicon & Apple touch icon', 'custom-favicon' ), array( $this, 'section_favicon' ), 'dot_cfi_settings' );
+
 			add_settings_field( 'favicon_frontend_url', __( 'Favicon for Website', 'custom-favicon' ), array( $this, 'section_favicon_frontend_url' ), 'dot_cfi_settings', 'favicon' );
 			add_settings_field( 'favicon_backend_url', __( 'Favicon for Admin', 'custom-favicon' ), array( $this, 'section_favicon_backend_url' ), 'dot_cfi_settings', 'favicon' );
 			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Touch Icon for Website', 'custom-favicon' ), array( $this, 'section_apple_icon_frontend_url' ), 'dot_cfi_settings', 'favicon' );
@@ -69,7 +71,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 		}
 
 		public function dot_cfi_menu_contents() {
-		?>
+			?>
 			<div class="wrap">
 				<div id="icon-options-general" class="icon32"><br></div>
 				<h2><?php _e( 'Custom Favicon Settings', 'custom-favicon' ); ?></h2>
@@ -81,93 +83,105 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 					</p>
 				</form>
 			</div>
-		<?php
+			<?php
 		}
 
 		function section_favicon() {}
 
 		function section_favicon_frontend_url() {
-		    $options = get_option( 'dot_cfi_settings' );
-		    ?>
-		    <span class='upload'>
-		        <input type='text' id='dot_cfi_settings[favicon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_frontend_url]' value='<?php echo esc_url( $options["favicon_frontend_url"] ); ?>'/>
-		        <input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/></br>
-		        <img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options["favicon_frontend_url"] ); ?>' class='preview-upload' />
-		    </span>
-		    <?php
+			$options = get_option( 'dot_cfi_settings' );
+			?>
+			<span class='upload'>
+				<input type='text' id='dot_cfi_settings[favicon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_frontend_url]' value='<?php echo esc_url( $options['favicon_frontend_url'] ?? '' ); ?>'/>
+				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<?php if ( ! empty( $options['favicon_frontend_url'] ) ) : ?>
+					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['favicon_frontend_url'] ); ?>' class='preview-upload' />
+				<?php endif; ?>
+			</span>
+			<?php
 		}
 
 		function section_favicon_backend_url() {
-		    $options = get_option( 'dot_cfi_settings' );
-		    ?>
-		    <span class='upload'>
-		        <input type='text' id='dot_cfi_settings[favicon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_backend_url]' value='<?php echo esc_url( $options["favicon_backend_url"] ); ?>'/>
-		        <input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/></br>
-		        <img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options["favicon_backend_url"] ); ?>' class='preview-upload' />
-		    </span>
-		    <?php
+			$options = get_option( 'dot_cfi_settings' );
+			?>
+			<span class='upload'>
+				<input type='text' id='dot_cfi_settings[favicon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_backend_url]' value='<?php echo esc_url( $options['favicon_backend_url'] ?? '' ); ?>'/>
+				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<?php if ( ! empty( $options['favicon_backend_url'] ) ) : ?>
+					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['favicon_backend_url'] ); ?>' class='preview-upload' />
+				<?php endif; ?>
+			</span>
+			<?php
 		}
 
 		function section_apple_icon_frontend_url() {
-		    $options = get_option( 'dot_cfi_settings' );
-		    ?>
-		    <span class='upload'>
-		        <input type='text' id='dot_cfi_settings[apple_icon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_frontend_url]' value='<?php echo esc_url( $options["apple_icon_frontend_url"] ); ?>'/>
-		        <input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/></br>
-		        <img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options["apple_icon_frontend_url"] ); ?>' class='preview-upload' />
-		    </span>
-		    <?php
+			$options = get_option( 'dot_cfi_settings' );
+			?>
+			<span class='upload'>
+				<input type='text' id='dot_cfi_settings[apple_icon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_frontend_url]' value='<?php echo esc_url( $options['apple_icon_frontend_url'] ?? '' ); ?>'/>
+				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<?php if ( ! empty( $options['apple_icon_frontend_url'] ) ) : ?>
+					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['apple_icon_frontend_url'] ); ?>' class='preview-upload' />
+				<?php endif; ?>
+			</span>
+			<?php
 		}
 
 		function section_apple_icon_backend_url() {
-		    $options = get_option( 'dot_cfi_settings' );
-		    ?>
-		    <span class='upload'>
-		        <input type='text' id='dot_cfi_settings[apple_icon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_backend_url]' value='<?php echo esc_url( $options["apple_icon_backend_url"] ); ?>'/>
-		        <input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/></br>
-		        <img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options["apple_icon_backend_url"] ); ?>' class='preview-upload' />
-		    </span>
-		    <?php
+			$options = get_option( 'dot_cfi_settings' );
+			?>
+			<span class='upload'>
+				<input type='text' id='dot_cfi_settings[apple_icon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_backend_url]' value='<?php echo esc_url( $options['apple_icon_backend_url'] ?? '' ); ?>'/>
+				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<?php if ( ! empty( $options['apple_icon_backend_url'] ) ) : ?>
+					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['apple_icon_backend_url'] ); ?>' class='preview-upload' />
+				<?php endif; ?>
+			</span>
+			<?php
 		}
 
 		function section_apple_icon_style() {
 			$options = get_option( 'dot_cfi_settings' );
-			if( !isset( $options['apple_icon_style'] ) ) $options['apple_icon_style'] = '0';
+			$value   = $options['apple_icon_style'] ?? '0';
 			echo '<input type="hidden" name="dot_cfi_settings[apple_icon_style]" value="0" />
-			<label><input type="checkbox" name="dot_cfi_settings[apple_icon_style]" value="1"' . ( ( $options['apple_icon_style'] ) ? ' checked="checked"' : '' ) . ' />
-			 ' . __( 'Disable Curved Border & reflective shine for Apple touch icon', 'custom-favicon' ) . '</label><br />';
+			<label><input type="checkbox" name="dot_cfi_settings[apple_icon_style]" value="1"' . ( $value === '1' ? ' checked="checked"' : '' ) . ' />
+			' . __( 'Disable Curved Border & reflective shine for Apple touch icon', 'custom-favicon' ) . '</label><br />';
 		}
 
 		function settings_validate( $input ) {
 			return $input;
 		}
 
+		/**
+		 * Outputs the frontend favicon and Apple touch icon tags.
+		 */
 		function dot_cfi_favicon_frontend() {
-			$options = get_option( 'dot_cfi_settings' );
+			$options = (array) get_option( 'dot_cfi_settings' );
+
 			if ( ! empty( $options['favicon_frontend_url'] ) ) {
-		        echo '<link rel="shortcut icon" href="' . esc_url( $options["favicon_frontend_url"] ) . '"/>' . "\n";
-		    }
-		    if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
-		    	if ( $options['apple_icon_style'] == '0' ) {
-		        	echo '<link rel="apple-touch-icon" href="' . esc_url( $options["apple_icon_frontend_url"] ) . '"/>' . "\n";
-		    	} else {
-		    		echo '<link rel="apple-touch-icon-precomposed" href="' . esc_url( $options["apple_icon_frontend_url"] ) . '"/>' . "\n";
-		    	}
-		    }
+				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_frontend_url'] ) . '" />' . "\n";
+			}
+
+			if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
+				$rel = ( $options['apple_icon_style'] === '0' ) ? 'apple-touch-icon' : 'apple-touch-icon-precomposed';
+				echo '<link rel="' . esc_attr( $rel ) . '" href="' . esc_url( $options['apple_icon_frontend_url'] ) . '" />' . "\n";
+			}
 		}
 
+		/**
+		 * Outputs the admin/login favicon and Apple touch icon tags.
+		 */
 		function dot_cfi_favicon_backend() {
-			$options = get_option( 'dot_cfi_settings' );
+			$options = (array) get_option( 'dot_cfi_settings' );
+
 			if ( ! empty( $options['favicon_backend_url'] ) ) {
-		        echo '<link rel="shortcut icon" href="' . esc_url( $options["favicon_backend_url"] ) . '"/>' . "\n";
-		    }
-		    if ( ! empty( $options['apple_icon_backend_url'] ) ) {
-		    	if ( $options['apple_icon_style'] == '0' ) {
-		        	echo '<link rel="apple-touch-icon" href="' . esc_url( $options["apple_icon_backend_url"] ) . '"/>' . "\n";
-		    	} else {
-		    		echo '<link rel="apple-touch-icon-precomposed" href="' . esc_url( $options["apple_icon_backend_url"] ) . '"/>' . "\n";
-		    	}
-		    }
+				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_backend_url'] ) . '" />' . "\n";
+			}
+
+			if ( ! empty( $options['apple_icon_backend_url'] ) ) {
+				$rel = ( $options['apple_icon_style'] === '0' ) ? 'apple-touch-icon' : 'apple-touch-icon-precomposed';
+				echo '<link rel="' . esc_attr( $rel ) . '" href="' . esc_url( $options['apple_icon_backend_url'] ) . '" />' . "\n";
+			}
 		}
 	}
 
