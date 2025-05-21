@@ -80,7 +80,8 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 			add_settings_section( 'favicon', __( 'Custom Favicon & Apple touch icon', 'custom-favicon' ), '__return_false', $this->option_key );
 
-			add_settings_field( 'favicon_frontend_url', __( 'Favicon for Website', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon', [ 'key' => 'favicon_frontend_url' ] );
+			add_settings_field( 'favicon_frontend_url', __( 'Favicon for Light Mode (default)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon', [ 'key' => 'favicon_frontend_url' ] );
+			add_settings_field( 'favicon_dark_url', __( 'Favicon for Dark Mode', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon', [ 'key' => 'favicon_dark_url' ] );
 			add_settings_field( 'favicon_backend_url', __( 'Favicon for Admin', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon', [ 'key' => 'favicon_backend_url' ] );
 			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Touch Icon for Website', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon', [ 'key' => 'apple_icon_frontend_url' ] );
 			add_settings_field( 'apple_icon_backend_url', __( 'Apple Touch Icon for Admin', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon', [ 'key' => 'apple_icon_backend_url' ] );
@@ -131,9 +132,15 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 		public function custom_favicon_output_frontend_tags() {
 			$options = get_option( $this->option_key );
+
 			if ( ! empty( $options['favicon_frontend_url'] ) ) {
-				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_frontend_url'] ) . '" />' . "\n";
+				echo '<link rel="icon" href="' . esc_url( $options['favicon_frontend_url'] ) . '" media="(prefers-color-scheme: light)" />' . "\n";
 			}
+
+			if ( ! empty( $options['favicon_dark_url'] ) ) {
+				echo '<link rel="icon" href="' . esc_url( $options['favicon_dark_url'] ) . '" media="(prefers-color-scheme: dark)" />' . "\n";
+			}
+
 			if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
 				$rel = ( $options['apple_icon_style'] === '0' ) ? 'apple-touch-icon' : 'apple-touch-icon-precomposed';
 				echo '<link rel="' . esc_attr( $rel ) . '" href="' . esc_url( $options['apple_icon_frontend_url'] ) . '" />' . "\n";
@@ -142,9 +149,11 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 		public function custom_favicon_output_admin_tags() {
 			$options = get_option( $this->option_key );
+
 			if ( ! empty( $options['favicon_backend_url'] ) ) {
 				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_backend_url'] ) . '" />' . "\n";
 			}
+
 			if ( ! empty( $options['apple_icon_backend_url'] ) ) {
 				$rel = ( $options['apple_icon_style'] === '0' ) ? 'apple-touch-icon' : 'apple-touch-icon-precomposed';
 				echo '<link rel="' . esc_attr( $rel ) . '" href="' . esc_url( $options['apple_icon_backend_url'] ) . '" />' . "\n";
