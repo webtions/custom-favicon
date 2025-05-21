@@ -1,35 +1,18 @@
 <?php
-/*
+/**
  * Plugin Name: Custom Favicon
- * Plugin URI: http://www.dreamsonline.net/wordpress-plugins/custom-favicon/
- * Description: Helps customize WordPress for your clients by hiding non essential wp-admin components and by adding support for custom login logo and favicon for website and admin pages.
- * Version: 1.0.3
- * Author: Harish Chouhan
- * Author URI: http://www.dreamsonline.net/wordpress-themes/
- * Author Email: hello@dreamsmedia.in
+ * Plugin URI: https://themeist.com/plugins/wordpress/custom-favicon/
+ * Description: Adds support for custom favicons across WordPress frontend, admin, and login pages, including light/dark mode support.
+ * Version: 1.1.0
+ * Author: Harish Chouhan, Themeist
+ * Author URI: https://themeist.com/
+ * Author Email: support@themeist.com/
+ * Text Domain: custom-favicon
+ * License: GPL-3.0
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
+ * Domain Path: /languages
  *
- * @package WordPress
- * @subpackage DOT_CFI
- * @author Harish
- * @since 1.0
- *
- * License:
-
-  Copyright 2015 "Custom Favicon WordPress Plugin" (hello@dreamsmedia.in)
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
+ * @package CustomFavicon
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'DOT_CFI' ) ) {
@@ -113,7 +96,7 @@ if ( ! class_exists( 'DOT_CFI' ) ) {
     			wp_enqueue_script( 'media-upload' );
 
 		        wp_register_script('dot_cfi_admin', plugins_url( '/js/dot_cfi_admin.js' , __FILE__ ), array( 'thickbox', 'media-upload' ));
-		        
+
 		        wp_enqueue_script('dot_cfi_admin');
 		    }
 		} //dot_cfi_assets

@@ -1,18 +1,13 @@
 === Custom Favicon ===
 Contributors: hchouhan, themeist
-Donate link: http://www.dreamsonline.net
-Tags: theme, favicon, admin, blog, wordpress, icon, iphone, apple touch, apple touch icon, upload
-Requires at least: 3.5
-Tested up to: 4.2.1
-Stable tag: 1.0.3
-Last Updated: 2015-May-06
-Plugin Name: Custom Favicon
-Plugin URI: http://www.dreamsonline.net/wordpress-plugins/custom-favicon/
-Author: Harish Chouhan
-Author URI: http://www.dreamsonline.net/wordpress-themes/
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
+Donate link: https://themeist.com/plugins/wordpress/custom-favicon/
+Tags: favicon, icon, site icon, svg icon, dark mode
+Requires at least: 6.0
+Tested up to: 6.8
+Stable tag: 1.1.0
+Requires PHP: 7.4
+License: GPL-3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
 This plugin allows you to add upload custom favicon & Apple touch icon for your website and WordPress Dashboard using built-in media uploader.
 
