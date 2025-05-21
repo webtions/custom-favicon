@@ -46,13 +46,13 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 				__( 'Custom Favicon', 'custom-favicon' ),
 				__( 'Custom Favicon', 'custom-favicon' ),
 				'manage_options',
-				'custom_favicon',
+				'custom-favicon',
 				array( $this, 'custom_favicon_render_settings_page' )
 			);
 		}
 
 		public function custom_favicon_enqueue_assets( $hook_suffix ) {
-			if ( $hook_suffix !== 'settings_page_custom_favicon' ) {
+			if ( $hook_suffix !== 'settings_page_custom-favicon' ) {
 				return;
 			}
 			wp_enqueue_media();
