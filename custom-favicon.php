@@ -160,9 +160,14 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			if ( ! $url ) {
 				return;
 			}
-			$type       = str_ends_with( $url, '.svg' ) ? ' type="image/svg+xml"' : '';
-			$media_attr = $media ? ' media="' . esc_attr( $media ) . '"' : '';
-			echo '<link rel="icon" href="' . esc_url( $url ) . '"' . $media_attr . $type . ' />' . "\n";
+			echo '<link rel="icon" href="' . esc_url( $url ) . '"';
+			if ( $media ) {
+				echo ' media="' . esc_attr( $media ) . '"';
+			}
+			if ( str_ends_with( $url, '.svg' ) ) {
+				echo ' type="' . esc_attr( 'image/svg+xml' ) . '"';
+			}
+			echo ' />' . "\n";
 		}
 
 		public function output_frontend_favicons() {
@@ -185,10 +190,14 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 		public function output_admin_favicons() {
 			$options = get_option( $this->option_key );
+			$url     = $options['favicon_admin_url'] ?? '';
 
-			if ( ! empty( $options['favicon_admin_url'] ) ) {
-				$type = str_ends_with( $options['favicon_admin_url'], '.svg' ) ? ' type="image/svg+xml"' : '';
-				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_admin_url'] ) . '"' . $type . ' />' . "\n";
+			if ( $url ) {
+				echo '<link rel="shortcut icon" href="' . esc_url( $url ) . '"';
+				if ( str_ends_with( $url, '.svg' ) ) {
+					echo ' type="' . esc_attr( 'image/svg+xml' ) . '"';
+				}
+				echo ' />' . "\n";
 			}
 
 			if ( ! empty( $options['apple_icon_backend_url'] ) ) {
