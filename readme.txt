@@ -13,14 +13,16 @@ Easily add a custom favicon and Apple touch icon to your WordPress site, includi
 
 == Description ==
 
-**Custom Favicon** lets you upload and manage favicons for your WordPress website, admin area, and login screen using the native media uploader. Unlike the built-in Site Icon feature, this plugin gives you full control — including support for separate frontend and backend icons, Apple touch icons, and upcoming features like SVG and dark mode favicons.
+**Custom Favicon** lets you upload and manage favicons for your WordPress website, admin area, and login screen using the native media uploader. Unlike the built-in Site Icon feature, this plugin gives you full control — including support for separate frontend and backend icons, Apple touch icons, dark mode icons, and SVG format.
 
 **Features include:**
 - Upload custom favicon for frontend (browser tab icon)
 - Upload separate favicon for WordPress Dashboard and login page
 - Upload Apple touch icons for iOS devices
+- Upload dark mode specific favicon
+- SVG favicon support
+- Option to disable default WordPress Site Icon output
 - Clean and simple settings page under **Settings → Custom Favicon**
-- Upcoming: SVG favicon support and light/dark mode detection
 
 This plugin is useful for:
 - Replacing the default WordPress favicon
@@ -40,28 +42,30 @@ Need help? Ask in the [Support Forum on WordPress.org](https://wordpress.org/sup
 == Frequently Asked Questions ==
 
 = Will this override the default WordPress Site Icon? =
-Yes, when set, these favicons take precedence on the frontend, admin, and login pages.
+Yes. When enabled, the plugin replaces WordPress’s default favicon and Apple icon output.
 
 = Can I use SVG files? =
-Yes, if your theme or setup allows it. Some setups require allowing SVG uploads manually.
+Yes. Modern browsers support SVG favicons. If your theme doesn’t allow SVG uploads, you may need to enable that manually.
 
 = Does this support light/dark mode favicons? =
-Yes. You can upload separate icons for light and dark themes using `prefers-color-scheme`.
+Yes. You can upload separate favicons for light and dark appearance modes using the `prefers-color-scheme` media query.
 
 = Where can I get help? =
 You can ask your question in the [WordPress.org Support Forum](https://wordpress.org/support/plugin/custom-favicon/)
 
-== Screenshots ==
-1. Settings page to upload frontend and backend favicons
-2. Apple touch icon and dark mode favicon support
-3. Example of custom admin and login icons
-
 == Changelog ==
 
-= 1.1.0 =
-* Updated readme and plugin metadata
-* Improved dark mode support
-* Prepared for modern WordPress versions
+= 1.1.0 - (21 May 2025) =
+* Completely refactored plugin codebase to follow WordPress coding standards (PHPCS)
+* Added support for dark mode favicons using `prefers-color-scheme`
+* Added support for SVG icons
+* Added `apple-touch-icon` and `msapplication-TileImage` meta output
+* Added option to disable WordPress’s default Site Icon output
+* Improved admin settings UI and image upload experience
+* Added automatic migration of old plugin settings
+* Improved plugin security and sanitization
+* Removed legacy Apple icon style option
+* Removed screenshots section from plugin readme
 
 = 1.0.3 =
 * Updated readme
