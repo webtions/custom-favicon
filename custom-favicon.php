@@ -74,12 +74,12 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			?>
 			<div class="wrap">
 				<div id="icon-options-general" class="icon32"><br></div>
-				<h2><?php _e( 'Custom Favicon Settings', 'custom-favicon' ); ?></h2>
+				<h2><?php echo esc_html( __( 'Custom Favicon Settings', 'custom-favicon' ) ); ?></h2>
 				<form method="post" action="options.php">
 					<?php settings_fields( 'dot_cfi_settings' ); ?>
 					<?php do_settings_sections( 'dot_cfi_settings' ); ?>
 					<p class="submit">
-						<input name="Submit" type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'custom-favicon' ); ?>" />
+						<input name="Submit" type="submit" class="button-primary" value="<?php esc_html_e( 'Save Changes', 'custom-favicon' ); ?>" />
 					</p>
 				</form>
 			</div>
@@ -93,7 +93,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			?>
 			<span class='upload'>
 				<input type='text' id='dot_cfi_settings[favicon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_frontend_url]' value='<?php echo esc_attr( $options['favicon_frontend_url'] ?? '' ); ?>'/>
-				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<input type='button' class='button button-upload' value='<?php esc_html_e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['favicon_frontend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['favicon_frontend_url'] ); ?>' class='preview-upload' />
 				<?php endif; ?>
@@ -106,7 +106,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			?>
 			<span class='upload'>
 				<input type='text' id='dot_cfi_settings[favicon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_backend_url]' value='<?php echo esc_attr( $options['favicon_backend_url'] ?? '' ); ?>'/>
-				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<input type='button' class='button button-upload' value='<?php esc_html_e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['favicon_backend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['favicon_backend_url'] ); ?>' class='preview-upload' />
 				<?php endif; ?>
@@ -119,7 +119,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			?>
 			<span class='upload'>
 				<input type='text' id='dot_cfi_settings[apple_icon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_frontend_url]' value='<?php echo esc_attr( $options['apple_icon_frontend_url'] ?? '' ); ?>'/>
-				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<input type='button' class='button button-upload' value='<?php esc_html_e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['apple_icon_frontend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['apple_icon_frontend_url'] ); ?>' class='preview-upload' />
 				<?php endif; ?>
@@ -132,7 +132,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			?>
 			<span class='upload'>
 				<input type='text' id='dot_cfi_settings[apple_icon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_backend_url]' value='<?php echo esc_attr( $options['apple_icon_backend_url'] ?? '' ); ?>'/>
-				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
+				<input type='button' class='button button-upload' value='<?php esc_html_e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['apple_icon_backend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['apple_icon_backend_url'] ); ?>' class='preview-upload' />
 				<?php endif; ?>
@@ -145,12 +145,9 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$value   = $options['apple_icon_style'] ?? '0';
 			echo '<input type="hidden" name="dot_cfi_settings[apple_icon_style]" value="0" />
 			<label><input type="checkbox" name="dot_cfi_settings[apple_icon_style]" value="1"' . ( $value === '1' ? ' checked="checked"' : '' ) . ' />
-			' . __( 'Disable Curved Border & reflective shine for Apple touch icon', 'custom-favicon' ) . '</label><br />';
+			' . esc_html__( 'Disable Curved Border & reflective shine for Apple touch icon', 'custom-favicon' ) . '</label><br />';
 		}
 
-		/**
-		 * Sanitize and validate all saved settings.
-		 */
 		function settings_validate( $input ) {
 			foreach ( $input as $key => $value ) {
 				$input[ $key ] = esc_url_raw( $value );
