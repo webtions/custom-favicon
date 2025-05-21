@@ -142,8 +142,10 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( $this->option_key );
 			$value   = $options[ $key ] ?? '';
 			?>
-			<input type="text" id="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" class="regular-text text-upload" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="<?php echo esc_url( $value ); ?>" />
-			<input type="button" class="button button-upload" value="<?php esc_attr_e( 'Upload', 'custom-favicon' ); ?>" />
+			<span class="upload">
+				<input type="text" id="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" class="regular-text text-upload" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="<?php echo esc_url( $value ); ?>" />
+				<input type="button" class="button button-upload" value="<?php esc_attr_e( 'Upload', 'custom-favicon' ); ?>" />
+			</span>
 			<?php
 		}
 
@@ -168,12 +170,10 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$default = $options['favicon_default_url'] ?? '';
 			$dark    = $options['favicon_dark_url'] ?? '';
 
-			// Output dark mode first (with media query)
 			if ( $dark ) {
 				$this->output_favicon_tag( $dark, '(prefers-color-scheme: dark)' );
 			}
 
-			// Output light/default (also with explicit media)
 			if ( $default ) {
 				$this->output_favicon_tag( $default, '(prefers-color-scheme: light)' );
 			}
