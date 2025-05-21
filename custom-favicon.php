@@ -32,9 +32,10 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 			add_action( 'admin_init', array( $this, 'migrate_settings' ) );
-			add_action( 'wp_head', array( $this, 'output_frontend_favicons' ) );
+			add_action( 'wp_head', array( $this, 'output_frontend_favicons' ), 1 );
 			add_action( 'admin_head', array( $this, 'output_admin_favicons' ) );
 			add_action( 'login_head', array( $this, 'output_admin_favicons' ) );
+			add_filter( 'site_icon_meta_tags', array( $this, 'maybe_remove_site_icon' ) );
 		}
 
 		public function load_localisation() {
@@ -104,6 +105,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			add_settings_field( 'favicon_default_url', __( 'Favicon (Default)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', [ 'key' => 'favicon_default_url' ] );
 			add_settings_field( 'favicon_dark_url', __( 'Favicon (Dark Mode Override)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', [ 'key' => 'favicon_dark_url' ] );
 			add_settings_field( 'favicon_admin_url', __( 'Favicon (Admin Area)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', [ 'key' => 'favicon_admin_url' ] );
+			add_settings_field( 'disable_site_icon', __( 'Disable WordPress Site Icon', 'custom-favicon' ), array( $this, 'field_checkbox' ), $this->option_key, 'favicon_section', [ 'key' => 'disable_site_icon' ] );
 
 			add_settings_section( 'apple_section', __( 'Apple Touch Icons', 'custom-favicon' ), array( $this, 'section_description_apple' ), $this->option_key );
 			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Icon (Website)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'apple_section', [ 'key' => 'apple_icon_frontend_url' ] );
@@ -133,8 +135,8 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 		public function section_description_apple() {
 			echo '<p>' . esc_html__( 'Displayed when users save your site to their mobile home screen.', 'custom-favicon' ) . '</p>';
-			echo '<p><strong>' . esc_html__( 'Recommended size:', 'custom-favicon' ) . '</strong> 180×180px PNG. ';
-			echo esc_html__( 'SVG is not supported by Apple icons.', 'custom-favicon' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Recommended size:', 'custom-favicon' ) . '</strong> 180×180px. ';
+			echo esc_html__( 'Supports .ico, .png, .svg.', 'custom-favicon' ) . '</p>';
 		}
 
 		public function field_image_url( $args ) {
@@ -147,20 +149,42 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			<?php
 		}
 
+		public function field_checkbox( $args ) {
+			$key     = $args['key'];
+			$options = get_option( $this->option_key );
+			$checked = ! empty( $options[ $key ] );
+			?>
+			<label>
+				<input type="checkbox" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="1" <?php checked( $checked ); ?> />
+				<?php esc_html_e( 'Prevents WordPress from adding default Site Icon tags.', 'custom-favicon' ); ?>
+			</label>
+			<?php
+		}
+
 		public function sanitize_settings( $input ) {
 			foreach ( $input as $key => $val ) {
-				$input[ $key ] = esc_url_raw( $val );
+				$input[ $key ] = is_string( $val ) ? esc_url_raw( $val ) : $val;
 			}
 			return $input;
+		}
+
+		public function maybe_remove_site_icon( $meta_tags ) {
+			$options = get_option( $this->option_key );
+			if ( ! empty( $options['disable_site_icon'] ) ) {
+				return [];
+			}
+			return $meta_tags;
 		}
 
 		private function output_favicon_tag( $url, $media = '' ) {
 			if ( ! $url ) {
 				return;
 			}
-			$type_attr = str_ends_with( $url, '.svg' ) ? ' type="image/svg+xml"' : '';
-			$media_attr = $media ? ' media="' . esc_attr( $media ) . '"' : '';
-			echo '<link rel="icon" href="' . esc_url( $url ) . '"' . $media_attr . $type_attr . ' />' . "\n";
+			$type  = str_ends_with( $url, '.svg' ) ? 'image/svg+xml' : '';
+			echo '<link rel="icon" href="' . esc_url( $url ) . '"'
+				. ( $media ? ' media="' . esc_attr( $media ) . '"' : '' )
+				. ( $type ? ' type="' . esc_attr( $type ) . '"' : '' )
+				. ' />' . "\n";
 		}
 
 		public function output_frontend_favicons() {
@@ -177,19 +201,17 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
 				echo '<link rel="apple-touch-icon" href="' . esc_url( $options['apple_icon_frontend_url'] ) . '" />' . "\n";
 			}
-			if ( $default && str_ends_with( $default, '.png' ) ) {
-				echo '<meta name="msapplication-TileImage" content="' . esc_url( $default ) . '" />' . "\n";
-			}
 		}
 
 		public function output_admin_favicons() {
 			$options = get_option( $this->option_key );
 
 			if ( ! empty( $options['favicon_admin_url'] ) ) {
-				$type = str_ends_with( $options['favicon_admin_url'], '.svg' ) ? ' type="image/svg+xml"' : '';
-				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_admin_url'] ) . '"' . $type . ' />' . "\n";
+				$type = str_ends_with( $options['favicon_admin_url'], '.svg' ) ? 'image/svg+xml' : '';
+				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_admin_url'] ) . '"'
+					. ( $type ? ' type="' . esc_attr( $type ) . '"' : '' )
+					. ' />' . "\n";
 			}
-
 			if ( ! empty( $options['apple_icon_backend_url'] ) ) {
 				echo '<link rel="apple-touch-icon" href="' . esc_url( $options['apple_icon_backend_url'] ) . '" />' . "\n";
 			}
