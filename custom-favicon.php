@@ -92,7 +92,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( 'dot_cfi_settings' );
 			?>
 			<span class='upload'>
-				<input type='text' id='dot_cfi_settings[favicon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_frontend_url]' value='<?php echo esc_url( $options['favicon_frontend_url'] ?? '' ); ?>'/>
+				<input type='text' id='dot_cfi_settings[favicon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_frontend_url]' value='<?php echo esc_attr( $options['favicon_frontend_url'] ?? '' ); ?>'/>
 				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['favicon_frontend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['favicon_frontend_url'] ); ?>' class='preview-upload' />
@@ -105,7 +105,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( 'dot_cfi_settings' );
 			?>
 			<span class='upload'>
-				<input type='text' id='dot_cfi_settings[favicon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_backend_url]' value='<?php echo esc_url( $options['favicon_backend_url'] ?? '' ); ?>'/>
+				<input type='text' id='dot_cfi_settings[favicon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[favicon_backend_url]' value='<?php echo esc_attr( $options['favicon_backend_url'] ?? '' ); ?>'/>
 				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['favicon_backend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['favicon_backend_url'] ); ?>' class='preview-upload' />
@@ -118,7 +118,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( 'dot_cfi_settings' );
 			?>
 			<span class='upload'>
-				<input type='text' id='dot_cfi_settings[apple_icon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_frontend_url]' value='<?php echo esc_url( $options['apple_icon_frontend_url'] ?? '' ); ?>'/>
+				<input type='text' id='dot_cfi_settings[apple_icon_frontend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_frontend_url]' value='<?php echo esc_attr( $options['apple_icon_frontend_url'] ?? '' ); ?>'/>
 				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['apple_icon_frontend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['apple_icon_frontend_url'] ); ?>' class='preview-upload' />
@@ -131,7 +131,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( 'dot_cfi_settings' );
 			?>
 			<span class='upload'>
-				<input type='text' id='dot_cfi_settings[apple_icon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_backend_url]' value='<?php echo esc_url( $options['apple_icon_backend_url'] ?? '' ); ?>'/>
+				<input type='text' id='dot_cfi_settings[apple_icon_backend_url]' class='regular-text text-upload' name='dot_cfi_settings[apple_icon_backend_url]' value='<?php echo esc_attr( $options['apple_icon_backend_url'] ?? '' ); ?>'/>
 				<input type='button' class='button button-upload' value='<?php _e( 'Upload an image', 'custom-favicon' ); ?>'/><br>
 				<?php if ( ! empty( $options['apple_icon_backend_url'] ) ) : ?>
 					<img style='max-width: 300px; display: block;' src='<?php echo esc_url( $options['apple_icon_backend_url'] ); ?>' class='preview-upload' />
@@ -148,13 +148,16 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			' . __( 'Disable Curved Border & reflective shine for Apple touch icon', 'custom-favicon' ) . '</label><br />';
 		}
 
+		/**
+		 * Sanitize and validate all saved settings.
+		 */
 		function settings_validate( $input ) {
+			foreach ( $input as $key => $value ) {
+				$input[ $key ] = esc_url_raw( $value );
+			}
 			return $input;
 		}
 
-		/**
-		 * Outputs the frontend favicon and Apple touch icon tags.
-		 */
 		function dot_cfi_favicon_frontend() {
 			$options = (array) get_option( 'dot_cfi_settings' );
 
@@ -168,9 +171,6 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			}
 		}
 
-		/**
-		 * Outputs the admin/login favicon and Apple touch icon tags.
-		 */
 		function dot_cfi_favicon_backend() {
 			$options = (array) get_option( 'dot_cfi_settings' );
 
