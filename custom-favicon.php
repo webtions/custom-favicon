@@ -15,20 +15,20 @@
  * @package Themeist_Custom_Favicon
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 	class Themeist_Custom_Favicon {
 
 		function __construct() {
-			add_action( 'init', array( &$this, 'load_localisation' ), 0 );
-			add_action( 'admin_menu', array( &$this, 'dot_cfi_menu' ) );
-			add_action( 'admin_enqueue_scripts', array( &$this, 'dot_cfi_assets' ) );
-			add_action( 'admin_init', array( &$this, 'dot_cfi_settings' ) );
-			add_action( 'wp_head', array( &$this, 'dot_cfi_favicon_frontend' ) );
-			add_action( 'admin_head', array( &$this, 'dot_cfi_favicon_backend' ) );
-			add_action( 'login_head', array( &$this, 'dot_cfi_favicon_backend' ) );
+			add_action( 'init', array( $this, 'load_localisation' ), 0 );
+			add_action( 'admin_menu', array( $this, 'dot_cfi_menu' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'dot_cfi_assets' ) );
+			add_action( 'admin_init', array( $this, 'dot_cfi_settings' ) );
+			add_action( 'wp_head', array( $this, 'dot_cfi_favicon_frontend' ) );
+			add_action( 'admin_head', array( $this, 'dot_cfi_favicon_backend' ) );
+			add_action( 'login_head', array( $this, 'dot_cfi_favicon_backend' ) );
 		}
 
 		public function load_localisation() {
@@ -44,7 +44,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$menu_title = __('Custom Favicon', 'dot_cfi');
 			$capability = 'manage_options';
 			$menu_slug = 'dot_cfi';
-			$function =  array( &$this, 'dot_cfi_menu_contents');
+			$function =  array( $this, 'dot_cfi_menu_contents' );
 			add_options_page($page_title, $menu_title, $capability, $menu_slug, $function);
 		}
 
@@ -59,13 +59,13 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 		}
 
 		public function dot_cfi_settings() {
-			register_setting( 'dot_cfi_settings', 'dot_cfi_settings', array(&$this, 'settings_validate') );
-			add_settings_section( 'favicon', __( 'Custom Favicon & Apple touch icon', 'dot_cfi' ), array( &$this, 'section_favicon' ), 'dot_cfi_settings' );
-			add_settings_field( 'favicon_frontend_url', __( 'Favicon for Website', 'dot_cfi' ), array( &$this, 'section_favicon_frontend_url' ), 'dot_cfi_settings', 'favicon' );
-			add_settings_field( 'favicon_backend_url', __( 'Favicon for Admin', 'dot_cfi' ), array( &$this, 'section_favicon_backend_url' ), 'dot_cfi_settings', 'favicon' );
-			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Touch Icon for Website', 'dot_cfi' ), array( &$this, 'section_apple_icon_frontend_url' ), 'dot_cfi_settings', 'favicon' );
-			add_settings_field( 'apple_icon_backend_url', __( 'Apple Touch Icon for Admin', 'dot_cfi' ), array( &$this, 'section_apple_icon_backend_url' ), 'dot_cfi_settings', 'favicon' );
-			add_settings_field( 'apple_icon_style', __( 'Basic Apple Touch Icon', 'dot_cfi' ), array( &$this, 'section_apple_icon_style' ), 'dot_cfi_settings', 'favicon' );
+			register_setting( 'dot_cfi_settings', 'dot_cfi_settings', array( $this, 'settings_validate' ) );
+			add_settings_section( 'favicon', __( 'Custom Favicon & Apple touch icon', 'dot_cfi' ), array( $this, 'section_favicon' ), 'dot_cfi_settings' );
+			add_settings_field( 'favicon_frontend_url', __( 'Favicon for Website', 'dot_cfi' ), array( $this, 'section_favicon_frontend_url' ), 'dot_cfi_settings', 'favicon' );
+			add_settings_field( 'favicon_backend_url', __( 'Favicon for Admin', 'dot_cfi' ), array( $this, 'section_favicon_backend_url' ), 'dot_cfi_settings', 'favicon' );
+			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Touch Icon for Website', 'dot_cfi' ), array( $this, 'section_apple_icon_frontend_url' ), 'dot_cfi_settings', 'favicon' );
+			add_settings_field( 'apple_icon_backend_url', __( 'Apple Touch Icon for Admin', 'dot_cfi' ), array( $this, 'section_apple_icon_backend_url' ), 'dot_cfi_settings', 'favicon' );
+			add_settings_field( 'apple_icon_style', __( 'Basic Apple Touch Icon', 'dot_cfi' ), array( $this, 'section_apple_icon_style' ), 'dot_cfi_settings', 'favicon' );
 		}
 
 		public function dot_cfi_menu_contents() {
@@ -143,7 +143,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 		}
 
 		function dot_cfi_favicon_frontend() {
-			$options =  get_option('dot_cfi_settings');
+			$options = get_option('dot_cfi_settings');
 			if( $options['favicon_frontend_url'] != "" ) {
 		        echo '<link rel="shortcut icon" href="'.  esc_url( $options["favicon_frontend_url"] )  .'"/>'."\n";
 		    }
@@ -157,7 +157,7 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 		}
 
 		function dot_cfi_favicon_backend() {
-			$options =  get_option('dot_cfi_settings');
+			$options = get_option('dot_cfi_settings');
 			if( $options['favicon_backend_url'] != "" ) {
 		        echo '<link rel="shortcut icon" href="'.  esc_url( $options["favicon_backend_url"] )  .'"/>'."\n";
 		    }
@@ -171,7 +171,6 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 		}
 	}
 
-	// Initiation call of plugin
 	$themeist_custom_favicon = new Themeist_Custom_Favicon();
 }
 ?>
