@@ -110,9 +110,6 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			<span class="upload">
 				<input type="text" id="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" class="regular-text text-upload" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="<?php echo esc_url( $value ); ?>" />
 				<input type="button" class="button button-upload" value="<?php esc_attr_e( 'Upload an image', 'custom-favicon' ); ?>" /><br>
-				<?php if ( $value ) : ?>
-					<img class="preview-upload" style="max-width: 300px; display: block;" src="<?php echo esc_url( $value ); ?>" />
-				<?php endif; ?>
 			</span>
 			<?php
 		}
