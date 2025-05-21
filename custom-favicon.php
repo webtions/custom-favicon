@@ -133,8 +133,8 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
 		public function section_description_apple() {
 			echo '<p>' . esc_html__( 'Displayed when users save your site to their mobile home screen.', 'custom-favicon' ) . '</p>';
-			echo '<p><strong>' . esc_html__( 'Recommended size:', 'custom-favicon' ) . '</strong> 512×512px. ';
-			echo esc_html__( 'Supports .ico, .png, .svg.', 'custom-favicon' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Recommended size:', 'custom-favicon' ) . '</strong> 180×180px PNG. ';
+			echo esc_html__( 'SVG is not supported by Apple icons.', 'custom-favicon' ) . '</p>';
 		}
 
 		public function field_image_url( $args ) {
@@ -142,10 +142,8 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			$options = get_option( $this->option_key );
 			$value   = $options[ $key ] ?? '';
 			?>
-			<span class="upload">
-				<input type="text" id="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" class="regular-text text-upload" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="<?php echo esc_url( $value ); ?>" />
-				<input type="button" class="button button-upload" value="<?php esc_attr_e( 'Upload', 'custom-favicon' ); ?>" />
-			</span>
+			<input type="text" id="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" class="regular-text text-upload" name="<?php echo esc_attr( $this->option_key . "[$key]" ); ?>" value="<?php echo esc_url( $value ); ?>" />
+			<input type="button" class="button button-upload" value="<?php esc_attr_e( 'Upload', 'custom-favicon' ); ?>" />
 			<?php
 		}
 
@@ -160,14 +158,9 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			if ( ! $url ) {
 				return;
 			}
-			echo '<link rel="icon" href="' . esc_url( $url ) . '"';
-			if ( $media ) {
-				echo ' media="' . esc_attr( $media ) . '"';
-			}
-			if ( str_ends_with( $url, '.svg' ) ) {
-				echo ' type="' . esc_attr( 'image/svg+xml' ) . '"';
-			}
-			echo ' />' . "\n";
+			$type_attr = str_ends_with( $url, '.svg' ) ? ' type="image/svg+xml"' : '';
+			$media_attr = $media ? ' media="' . esc_attr( $media ) . '"' : '';
+			echo '<link rel="icon" href="' . esc_url( $url ) . '"' . $media_attr . $type_attr . ' />' . "\n";
 		}
 
 		public function output_frontend_favicons() {
@@ -178,26 +171,23 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			if ( $dark ) {
 				$this->output_favicon_tag( $dark, '(prefers-color-scheme: dark)' );
 			}
-
 			if ( $default ) {
 				$this->output_favicon_tag( $default, '(prefers-color-scheme: light)' );
 			}
-
 			if ( ! empty( $options['apple_icon_frontend_url'] ) ) {
 				echo '<link rel="apple-touch-icon" href="' . esc_url( $options['apple_icon_frontend_url'] ) . '" />' . "\n";
+			}
+			if ( $default && str_ends_with( $default, '.png' ) ) {
+				echo '<meta name="msapplication-TileImage" content="' . esc_url( $default ) . '" />' . "\n";
 			}
 		}
 
 		public function output_admin_favicons() {
 			$options = get_option( $this->option_key );
-			$url     = $options['favicon_admin_url'] ?? '';
 
-			if ( $url ) {
-				echo '<link rel="shortcut icon" href="' . esc_url( $url ) . '"';
-				if ( str_ends_with( $url, '.svg' ) ) {
-					echo ' type="' . esc_attr( 'image/svg+xml' ) . '"';
-				}
-				echo ' />' . "\n";
+			if ( ! empty( $options['favicon_admin_url'] ) ) {
+				$type = str_ends_with( $options['favicon_admin_url'], '.svg' ) ? ' type="image/svg+xml"' : '';
+				echo '<link rel="shortcut icon" href="' . esc_url( $options['favicon_admin_url'] ) . '"' . $type . ' />' . "\n";
 			}
 
 			if ( ! empty( $options['apple_icon_backend_url'] ) ) {
