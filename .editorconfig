@@ -1,0 +1,23 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Set specific rules for PHP files
+[*.php]
+indent_style = tab
+
+# Set specific rules for CSS files
+[*.css]
+indent_style = tab
+
+# Set specific rules for JavaScript files
+[*.js]
+indent_style = tab

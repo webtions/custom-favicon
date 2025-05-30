@@ -21,12 +21,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 
+	/**
+	 * Main plugin class for Custom Favicon.
+	 */
 	class Themeist_Custom_Favicon {
 
+		/**
+		 * Option key used for storing settings.
+		 *
+		 * @var string
+		 */
 		private $option_key = 'custom_favicon_settings';
+
+		/**
+		 * Legacy option key for older plugin version.
+		 *
+		 * @var string
+		 */
 		private $legacy_option_key = 'dot_cfi_settings';
 
-		function __construct() {
+		/**
+		 * Constructor.
+		 */
+		public function __construct() {
 			add_action( 'init', array( $this, 'load_localisation' ), 0 );
 			add_action( 'admin_menu', array( $this, 'add_settings_menu' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -38,22 +55,35 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			add_filter( 'site_icon_meta_tags', array( $this, 'maybe_remove_site_icon' ) );
 		}
 
+		/**
+		 * Load plugin textdomain for translations.
+		 */
 		public function load_localisation() {
 			load_plugin_textdomain( 'custom-favicon', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 
+		/**
+		 * Add plugin settings page to admin menu.
+		 */
 		public function add_settings_menu() {
+			$capability = apply_filters( 'custom_favicon_capability', 'manage_options' );
+
 			add_options_page(
 				__( 'Custom Favicon', 'custom-favicon' ),
 				__( 'Custom Favicon', 'custom-favicon' ),
-				'manage_options',
+				$capability,
 				'custom-favicon',
 				array( $this, 'render_settings_page' )
 			);
 		}
 
+		/**
+		 * Enqueue admin assets.
+		 *
+		 * @param string $hook_suffix The current admin page.
+		 */
 		public function enqueue_assets( $hook_suffix ) {
-			if ( $hook_suffix !== 'settings_page_custom-favicon' ) {
+			if ( 'settings_page_custom-favicon' !== $hook_suffix ) {
 				return;
 			}
 			wp_enqueue_media();
@@ -66,6 +96,9 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			);
 		}
 
+		/**
+		 * Migrate legacy plugin settings.
+		 */
 		public function migrate_settings() {
 			$old = get_option( $this->legacy_option_key );
 			$new = get_option( $this->option_key );
@@ -98,20 +131,26 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			}
 		}
 
+		/**
+		 * Register plugin settings and fields.
+		 */
 		public function register_settings() {
 			register_setting( $this->option_key, $this->option_key, array( $this, 'sanitize_settings' ) );
 
 			add_settings_section( 'favicon_section', __( 'Favicon', 'custom-favicon' ), array( $this, 'section_description_favicon' ), $this->option_key );
-			add_settings_field( 'favicon_default_url', __( 'Favicon (Default)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', [ 'key' => 'favicon_default_url' ] );
-			add_settings_field( 'favicon_dark_url', __( 'Favicon (Dark Mode Override)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', [ 'key' => 'favicon_dark_url' ] );
-			add_settings_field( 'favicon_admin_url', __( 'Favicon (Admin Area)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', [ 'key' => 'favicon_admin_url' ] );
-			add_settings_field( 'disable_site_icon', __( 'Disable WordPress Site Icon', 'custom-favicon' ), array( $this, 'field_checkbox' ), $this->option_key, 'favicon_section', [ 'key' => 'disable_site_icon' ] );
+			add_settings_field( 'favicon_default_url', __( 'Favicon (Default)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', array( 'key' => 'favicon_default_url' ) );
+			add_settings_field( 'favicon_dark_url', __( 'Favicon (Dark Mode Override)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', array( 'key' => 'favicon_dark_url' ) );
+			add_settings_field( 'favicon_admin_url', __( 'Favicon (Admin Area)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'favicon_section', array( 'key' => 'favicon_admin_url' ) );
+			add_settings_field( 'disable_site_icon', __( 'Disable WordPress Site Icon', 'custom-favicon' ), array( $this, 'field_checkbox' ), $this->option_key, 'favicon_section', array( 'key' => 'disable_site_icon' ) );
 
 			add_settings_section( 'apple_section', __( 'Apple Touch Icons', 'custom-favicon' ), array( $this, 'section_description_apple' ), $this->option_key );
-			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Icon (Website)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'apple_section', [ 'key' => 'apple_icon_frontend_url' ] );
-			add_settings_field( 'apple_icon_backend_url', __( 'Apple Icon (Admin Area)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'apple_section', [ 'key' => 'apple_icon_backend_url' ] );
+			add_settings_field( 'apple_icon_frontend_url', __( 'Apple Icon (Website)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'apple_section', array( 'key' => 'apple_icon_frontend_url' ) );
+			add_settings_field( 'apple_icon_backend_url', __( 'Apple Icon (Admin Area)', 'custom-favicon' ), array( $this, 'field_image_url' ), $this->option_key, 'apple_section', array( 'key' => 'apple_icon_backend_url' ) );
 		}
 
+		/**
+		 * Render the plugin settings page.
+		 */
 		public function render_settings_page() {
 			?>
 			<div class="wrap">
@@ -127,18 +166,27 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			<?php
 		}
 
+		/**
+		 * Output section description for Favicon fields.
+		 */
 		public function section_description_favicon() {
 			echo '<p>' . esc_html__( 'Used in browser tabs and bookmarks. You can also override for dark mode and admin area.', 'custom-favicon' ) . '</p>';
-			echo '<p><strong>' . esc_html__( 'Recommended size:', 'custom-favicon' ) . '</strong> 512×512px. ';
-			echo esc_html__( 'Supports .ico, .png, .svg.', 'custom-favicon' ) . '</p>';
+			echo '<p>' . esc_html__( 'Recommended size: 512×512px. Supports .ico, .png, .svg.', 'custom-favicon' ) . '</p>';
 		}
 
+		/**
+		 * Output section description for Apple Touch Icon fields.
+		 */
 		public function section_description_apple() {
 			echo '<p>' . esc_html__( 'Displayed when users save your site to their mobile home screen.', 'custom-favicon' ) . '</p>';
-			echo '<p><strong>' . esc_html__( 'Recommended size:', 'custom-favicon' ) . '</strong> 180×180px. ';
-			echo esc_html__( 'Supports .ico, .png, .svg.', 'custom-favicon' ) . '</p>';
+			echo '<p>' . esc_html__( 'Recommended size: 180×180px. Supports .ico, .png, .svg.', 'custom-favicon' ) . '</p>';
 		}
 
+		/**
+		 * Output image upload field.
+		 *
+		 * @param array $args Field arguments.
+		 */
 		public function field_image_url( $args ) {
 			$key     = $args['key'];
 			$options = get_option( $this->option_key );
@@ -157,6 +205,11 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			<?php
 		}
 
+		/**
+		 * Output checkbox field.
+		 *
+		 * @param array $args Field arguments.
+		 */
 		public function field_checkbox( $args ) {
 			$key     = $args['key'];
 			$options = get_option( $this->option_key );
@@ -169,6 +222,12 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			<?php
 		}
 
+		/**
+		 * Sanitize settings before saving.
+		 *
+		 * @param array $input Input values.
+		 * @return array
+		 */
 		public function sanitize_settings( $input ) {
 			foreach ( $input as $key => $val ) {
 				$input[ $key ] = is_string( $val ) ? esc_url_raw( $val ) : $val;
@@ -176,25 +235,40 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			return $input;
 		}
 
+		/**
+		 * Optionally remove WordPress site icon tags.
+		 *
+		 * @param array $meta_tags Site icon tags.
+		 * @return array
+		 */
 		public function maybe_remove_site_icon( $meta_tags ) {
 			$options = get_option( $this->option_key );
 			if ( ! empty( $options['disable_site_icon'] ) ) {
-				return [];
+				return array();
 			}
 			return $meta_tags;
 		}
 
+		/**
+		 * Output a favicon link tag.
+		 *
+		 * @param string $url   Favicon URL.
+		 * @param string $media Media condition.
+		 */
 		private function output_favicon_tag( $url, $media = '' ) {
 			if ( ! $url ) {
 				return;
 			}
-			$type  = str_ends_with( $url, '.svg' ) ? 'image/svg+xml' : '';
+			$type = str_ends_with( $url, '.svg' ) ? 'image/svg+xml' : '';
 			echo '<link rel="icon" href="' . esc_url( $url ) . '"'
 				. ( $media ? ' media="' . esc_attr( $media ) . '"' : '' )
 				. ( $type ? ' type="' . esc_attr( $type ) . '"' : '' )
 				. ' />' . "\n";
 		}
 
+		/**
+		 * Output favicon and meta tags on the frontend.
+		 */
 		public function output_frontend_favicons() {
 			$options = get_option( $this->option_key );
 			$default = $options['favicon_default_url'] ?? '';
@@ -214,6 +288,9 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 			}
 		}
 
+		/**
+		 * Output favicon and Apple icons in admin area and login screen.
+		 */
 		public function output_admin_favicons() {
 			$options = get_option( $this->option_key );
 

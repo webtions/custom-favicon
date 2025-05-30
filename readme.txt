@@ -50,6 +50,14 @@ Yes. Modern browsers support SVG favicons. If your theme doesn’t allow SVG upl
 = Does this support light/dark mode favicons? =
 Yes. You can upload separate favicons for light and dark appearance modes using the `prefers-color-scheme` media query.
 
+= Can editors access the settings page? =
+By default, only Administrators (with the `manage_options` capability) can access the settings page.
+Developers can override this using the `custom_favicon_capability` filter. For example, to allow Editors:
+```php
+add_filter( 'custom_favicon_capability', function () {
+    return 'edit_theme_options';
+} );
+
 = Where can I get help? =
 You can ask your question in the [WordPress.org Support Forum](https://wordpress.org/support/plugin/custom-favicon/)
 
@@ -65,7 +73,7 @@ You can ask your question in the [WordPress.org Support Forum](https://wordpress
 * Added automatic migration of old plugin settings
 * Improved plugin security and sanitization
 * Removed legacy Apple icon style option
-* Removed screenshots section from plugin readme
+* Added developer filter custom_favicon_capability to allow overriding who can access the settings page
 
 = 1.0.3 =
 * Updated readme
