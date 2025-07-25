@@ -1,5 +1,5 @@
-=== Custom Favicon ===
-Contributors: hchouhan, themeist
+=== Custom Favicon – Easily Add a Favicon in WordPress ===
+Contributors: themeist, hchouhan
 Donate link: https://themeist.com/plugins/wordpress/custom-favicon/
 Tags: favicon, icon, site icon, svg icon, dark mode
 Requires at least: 6.0
@@ -63,7 +63,7 @@ You can ask your question in the [WordPress.org Support Forum](https://wordpress
 
 == Changelog ==
 
-= 1.1.0 - (21 May 2025) =
+= 1.1.0 - (30 May 2025) =
 * Completely refactored plugin codebase to follow WordPress coding standards (PHPCS)
 * Added support for dark mode favicons using `prefers-color-scheme`
 * Added support for SVG icons

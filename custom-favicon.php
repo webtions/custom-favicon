@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Custom Favicon
- * Plugin URI: https://themeist.com/plugins/wordpress/custom-favicon/
+ * Plugin URI: https://themeist.com/plugins/wordpress/custom-favicon/#utm_source=wp-plugin&utm_medium=i-recommend-this&utm_campaign=plugins-page
  * Description: Adds support for custom favicons across WordPress frontend, admin, and login pages, including dark mode and SVG support.
  * Version: 1.1.0
- * Author: Harish Chouhan, Themeist
+ * Author: Themeist
  * Author URI: https://themeist.com/
  * Author Email: support@themeist.com/
  * Text Domain: custom-favicon
