@@ -307,4 +307,4 @@ if ( ! class_exists( 'Themeist_Custom_Favicon' ) ) {
 	}
 
 	new Themeist_Custom_Favicon();
-}
+}//end if
