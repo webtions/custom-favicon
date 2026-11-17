@@ -4,13 +4,18 @@ includes:
 parameters:
     level: 5
 
+    # Supported PHP range (keep in step with "Requires PHP").
+    phpVersion:
+        min: 80200
+        max: 80500
+
     paths:
         - .
 
     excludePaths:
         - ./vendor
-        - ./node_modules
-        - ./build
+        - ./node_modules (?)
+        - ./build (?)
         - ./.wordpress-org
 
     reportUnmatchedIgnoredErrors: false
