@@ -4,7 +4,7 @@ Donate link: https://themeist.com/plugins/wordpress/custom-favicon/
 Tags: favicon, icon, site icon, svg icon, dark mode
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 8.2
 License: GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -62,6 +62,11 @@ add_filter( 'custom_favicon_capability', function () {
 You can ask your question in the [WordPress.org Support Forum](https://wordpress.org/support/plugin/custom-favicon/)
 
 == Changelog ==
+
+= 1.1.1 - (17 November 2026) =
+* Changed: Minimum PHP version is now 8.2
+* Tested up to WordPress 7.1
+* Fixed: Translation files renamed to match the plugin text domain
 
 = 1.1.0 - (30 May 2025) =
 * Completely refactored plugin codebase to follow WordPress coding standards (PHPCS)
